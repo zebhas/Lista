@@ -43,7 +43,7 @@ public class ListaMain {
                     nombre = scanner.nextLine();
                     System.out.print("Ingrese edad: ");
                     edad = Integer.parseInt(scanner.nextLine());
-                    personas.addSorted(new Persona(nombre, edad));
+                    personas.addEnMedio(new Persona(nombre, edad));
                     break;
                 case 3:
                     System.out.print("Ingrese nombre: ");
