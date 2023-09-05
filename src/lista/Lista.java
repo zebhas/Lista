@@ -66,47 +66,53 @@ public class Lista<Item extends Comparable<? super Item>> implements Iterable<It
 
     public void addFirst(Item item) {
         Node<Item> nuevo = new Node<Item>(item);
-        nuevo.next = first;
-        first = nuevo;
-    }
-
-    public void addSorted(Item item) {
-        int indexToInsert = size() / 2; // Calcula el índice intermedio
-        Node<Item> current = first;
-        int currentIndex = 0;
-
-        while (current.next != null && currentIndex < indexToInsert - 1) {
-            current = current.next;
-            currentIndex++;
-        }
-
-        // Crea un nuevo nodo para el elemento
-        Node<Item> newNode = new Node<>(item);
-
-        if (currentIndex == 0) {
-            // Inserta el nuevo nodo antes del primer elemento
-            newNode.next = current.next;
-            current.next = newNode;
+        if (isEmpty() || item.compareTo(first.item) <= 0) {
+            nuevo.next = first;
+            first = nuevo;
         } else {
-            // Inserta el nuevo nodo después del elemento actual
-            newNode.next = current.next;
-            current.next = newNode;
+            Node<Item> current = first;
+            while (current.next != null && item.compareTo(current.next.item) > 0) {
+                current = current.next;
+            }
+            nuevo.next = current.next;
+            current.next = nuevo;
         }
-
     }
 
     public void addLast(Item item) {
-        Node<Item> nuevo = new Node<Item>(item);
-        if (isEmpty()) {
-            first = nuevo;
+         Node<Item> nuevo = new Node<Item>(item);
+    if (isEmpty()) {
+        first = nuevo;
+    } else if (item.compareTo(first.item) >= 0) {
+        Node<Item> tmp = first;
+        while (tmp.next != null && item.compareTo(tmp.next.item) >= 0) {
+            tmp = tmp.next;
+        }
+        nuevo.next = tmp.next;
+        tmp.next = nuevo;
+    } else {
+        nuevo.next = first;
+        first = nuevo;
+    }
+}
+
+    public void addEnMedio(Item item) {
+        Node<Item> newNode = new Node<>(item);
+        if (isEmpty() || item.compareTo(first.item) <= 0) {
+            newNode.next = first;
+            first = newNode;
         } else {
-            Node<Item> tmp = first;
-            while (tmp.next != null) {
-                tmp = tmp.next;
+            Node<Item> current = first;
+            while (current.next != null && item.compareTo(current.next.item) > 0) {
+                current = current.next;
             }
-            tmp.next = nuevo;
+            newNode.next = current.next;
+            current.next = newNode;
         }
     }
+
+
+
 
     public Item removeLast() {
         if (isEmpty()) {
